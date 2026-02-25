@@ -1,4 +1,4 @@
-import java.util.Stack;
+import java.util.*;
 
 public class PalindromeCheckerApp {
 
@@ -7,21 +7,25 @@ public class PalindromeCheckerApp {
         // Input string
         String input = "radar";
 
-        // Create a stack
+        // Create Queue and Stack
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Push all characters into the stack
+        // Add characters to both structures
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+            char ch = input.charAt(i);
+            queue.add(ch);     // Enqueue (FIFO)
+            stack.push(ch);    // Push (LIFO)
         }
 
-        // Compare by popping from stack
+        // Compare dequeue (queue) with pop (stack)
         boolean isPalindrome = true;
 
-        for (int i = 0; i < input.length(); i++) {
-            char poppedChar = stack.pop();
+        while (!queue.isEmpty()) {
+            char fromQueue = queue.remove();  // FIFO
+            char fromStack = stack.pop();     // LIFO
 
-            if (input.charAt(i) != poppedChar) {
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
@@ -32,3 +36,4 @@ public class PalindromeCheckerApp {
         System.out.println("Is Palindrome? " + isPalindrome);
     }
 }
+

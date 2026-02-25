@@ -1,29 +1,35 @@
 public class PalindromeCheckerApp {
 
-    // Recursive function to check palindrome
-    public static boolean isPalindrome(String str, int left, int right) {
+    // Function to check palindrome after normalization
+    public static boolean isPalindrome(String input) {
 
-        // Base condition: pointers crossed or equal
-        if (left >= right) {
-            return true;
+        // Step 1: Normalize string
+        // Remove spaces & special characters, convert to lowercase
+        String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        // Step 2: Two-pointer check
+        int left = 0;
+        int right = cleaned.length() - 1;
+
+        while (left < right) {
+            if (cleaned.charAt(left) != cleaned.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
 
-        // If mismatch found → not a palindrome
-        if (str.charAt(left) != str.charAt(right)) {
-            return false;
-        }
-
-        // Recursive call with reduced problem
-        return isPalindrome(str, left + 1, right - 1);
+        return true;
     }
 
     public static void main(String[] args) {
 
-        String input = "radar";
+        String input = "A man a plan a canal Panama";
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        boolean result = isPalindrome(input);
 
-        System.out.println("Input: " + input);
+        System.out.println("Original Input: " + input);
+        System.out.println("Processed Input: " + input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase());
         System.out.println("Is Palindrome? " + result);
     }
 }

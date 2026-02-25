@@ -1,35 +1,48 @@
-public class PalindromeCheckerApp {
+import java.util.Stack;
 
-    // Function to check palindrome after normalization
-    public static boolean isPalindrome(String input) {
+// Service class (Encapsulation)
+class PalindromeChecker {
 
-        // Step 1: Normalize string
-        // Remove spaces & special characters, convert to lowercase
+    // Public method to check palindrome
+    public boolean checkPalindrome(String input) {
+
+        if (input == null) return false;
+
+        // Normalize input (reuse UC10 concept)
         String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        // Step 2: Two-pointer check
-        int left = 0;
-        int right = cleaned.length() - 1;
+        // Use Stack internally (data structure hidden)
+        Stack<Character> stack = new Stack<>();
 
-        while (left < right) {
-            if (cleaned.charAt(left) != cleaned.charAt(right)) {
+        // Push all characters
+        for (int i = 0; i < cleaned.length(); i++) {
+            stack.push(cleaned.charAt(i));
+        }
+
+        // Compare with popped values
+        for (int i = 0; i < cleaned.length(); i++) {
+            if (cleaned.charAt(i) != stack.pop()) {
                 return false;
             }
-            left++;
-            right--;
         }
 
         return true;
     }
+}
+
+// Main application class
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         String input = "A man a plan a canal Panama";
 
-        boolean result = isPalindrome(input);
+        // Create object of service class
+        PalindromeChecker checker = new PalindromeChecker();
 
-        System.out.println("Original Input: " + input);
-        System.out.println("Processed Input: " + input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase());
+        boolean result = checker.checkPalindrome(input);
+
+        System.out.println("Input: " + input);
         System.out.println("Is Palindrome? " + result);
     }
 }

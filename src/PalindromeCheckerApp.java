@@ -7,25 +7,22 @@ public class PalindromeCheckerApp {
         // Input string
         String input = "radar";
 
-        // Create Queue and Stack
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // Create Deque
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Add characters to both structures
+        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);     // Enqueue (FIFO)
-            stack.push(ch);    // Push (LIFO)
+            deque.addLast(input.charAt(i));  // add to rear
         }
 
-        // Compare dequeue (queue) with pop (stack)
         boolean isPalindrome = true;
 
-        while (!queue.isEmpty()) {
-            char fromQueue = queue.remove();  // FIFO
-            char fromStack = stack.pop();     // LIFO
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+            char front = deque.removeFirst(); // remove from front
+            char rear = deque.removeLast();   // remove from rear
 
-            if (fromQueue != fromStack) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
@@ -36,4 +33,3 @@ public class PalindromeCheckerApp {
         System.out.println("Is Palindrome? " + isPalindrome);
     }
 }
-
